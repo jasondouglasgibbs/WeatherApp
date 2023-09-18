@@ -19,6 +19,15 @@ HourlyRelHumid <- ggplot(HourlyForeCastcontent, aes(x=startTime, y=relativeHumid
 HourlyRelHumid<-ggplotly(HourlyRelHumid)
 HourlyRelHumid
 
+##Hourly Probability of Precipitation.##
+HourlyPrecip <- ggplot(HourlyForeCastcontent, aes(x=startTime, y=probabilityOfPrecipitation.value)) +
+  geom_point() + 
+  xlab("Date")+scale_x_datetime(labels = date_format("%Y-%m-%d"),
+                                date_breaks = "24 hours")+
+  ylab("Probability of Precipitation (%)")
+HourlyPrecip<-ggplotly(HourlyPrecip)
+HourlyPrecip
+
 
 ##Wind Speed and Direction.##
 
@@ -61,3 +70,12 @@ WindSpeedDirPlotly<-plot_ly(HourlyForeCastcontent) %>%
                  showgrid = TRUE, showline = TRUE, showticklabels = FALSE),
     xaxis = list(fixedrange = TRUE,title="Date", zeroline = FALSE, showline = TRUE, showticklabels = TRUE, showgrid = TRUE)) 
 WindSpeedDirPlotly
+
+
+##Hourly Dew Point##
+HourlyDewPoint <- ggplot(HourlyForeCastcontent, aes(x=startTime, y=DEWPOINT_FAHRENHEIT)) +
+  geom_point() + 
+  xlab("Date")+scale_x_datetime(labels = date_format("%Y-%m-%d"),
+                                date_breaks = "24 hours")+ylab("Dew Point (Degrees F)")
+HourlyDewPoint<-ggplotly(HourlyDewPoint)
+HourlyDewPoint
