@@ -5,8 +5,8 @@
 
 
 ##Inputs##
-Lat<-"39.4633"
-Long<-"-76.1204"
+Lat<-"39.48233"
+Long<-"-76.13023"
 
 
 ##Builds base URL for forecast information.##
