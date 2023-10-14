@@ -9,12 +9,12 @@ library(RJSONIO)
 library(geojsonR)
 library(plotly)
 library(scales)
+ZipToLatLong<-read_xlsx("ZipToLatLong.xlsx")
 
 ui <- dashboardPage(
   dashboardHeader(title = "Basic Weather Dashboard"),
   dashboardSidebar(
-    numericInput("Lat", "Latitude",value=39.4633),
-    numericInput("Long","Longitude",value=-76.1204),
+    textInput("zip", "ZIP Code (five numbers):",value=21005),
     actionButton("go", "Go")
   ),
   dashboardBody(
@@ -34,11 +34,15 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
   
   observeEvent(input$go,{
-    req(input$Lat)
-    req(input$Long)
+    req(input$zip)
+    FilteredLatLong<-dplyr::filter(ZipToLatLong, ZIP==input$zip)
+    
+    ##Inputs##
+    Lat<-FilteredLatLong[1,"latitude"]
+    Long<-FilteredLatLong[1,"longitude"]
   
     ##Builds base URL for forecast information.##
-    BaseURL<-paste0("https://api.weather.gov/points/", input$Lat,",", input$Long)
+    BaseURL<-paste0("https://api.weather.gov/points/", Lat,",", Long)
     response<-as.character(RETRY("GET", BaseURL, encode="json",time=10))
     content<-FROM_GeoJson(response)
     ##Store state and city information for later use.#
