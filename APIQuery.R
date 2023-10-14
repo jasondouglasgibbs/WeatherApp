@@ -2,11 +2,12 @@
 ##See https://weather-gov.github.io/api/general-faqs and##
 ##https://www.weather.gov/documentation/services-web-api for##
 ##more information.##
-
+ZipToLatLong<-read_xlsx("ZipToLatLong.xlsx")
+FilteredLatLong<-dplyr::filter(ZipToLatLong, ZIP==ZipCode)
 
 ##Inputs##
-Lat<-"39.48233"
-Long<-"-76.13023"
+Lat<-FilteredLatLong[1,"latitude"]
+Long<-FilteredLatLong[1,"longitude"]
 
 
 ##Builds base URL for forecast information.##

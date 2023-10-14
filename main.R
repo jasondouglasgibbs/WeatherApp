@@ -1,7 +1,8 @@
 ##Main script for NWS weather data visualization.##
 
 ##Inputs##
-ZipUpdate<-FALSE
+ZipUpdate<-TRUE
+ZipCode<-"21005"
 
 ##Scripts
 source("libraries.R")

@@ -36,3 +36,4 @@ NameToLatLongReduced<-dplyr::select(NameToLatLong,c("name","latitude","longitude
 ##Join the two reduced data sets.##
 NameToLatLongReducedJOINED<-merge(ZIPtoTRACTReduced, NameToLatLongReduced, 
                                   by=c("name","admin1_code"), all.x=TRUE)
+write_xlsx(NameToLatLongReducedJOINED,"ZipToLatLong.xlsx")
