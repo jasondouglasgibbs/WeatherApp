@@ -1,5 +1,5 @@
 ##Necessary libraries and helper functions.##
-library(tidyverse)
+library(dplyr)
 library(httr)
 library(tictoc)
 library(conflicted)
@@ -10,3 +10,6 @@ library(plotly)
 library(scales)
 library(readxl)
 library(writexl)
+library(stringr)
+library(readr)
+library(lubridate)

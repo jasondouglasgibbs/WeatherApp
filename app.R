@@ -1,8 +1,7 @@
 ## app.R ##
 library(shinydashboard)
-library(tidyverse)
+library(dplyr)
 library(httr)
-library(tictoc)
 library(conflicted)
 library(jsonlite)
 library(RJSONIO)
@@ -11,6 +10,9 @@ library(plotly)
 library(scales)
 library(readxl)
 library(writexl)
+library(stringr)
+library(readr)
+library(lubridate)
 ZipToLatLong<-read_xlsx("ZipToLatLong.xlsx")
 
 ui <- dashboardPage(
