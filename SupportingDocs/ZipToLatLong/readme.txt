@@ -128,7 +128,7 @@ https://www.geonames.org to correct inaccuracies and to add new records.
 Thanks in the name of the geonames community for your valuable contribution.
 
 Data Sources:
-https://www.geonames.org/data-sources.html
+https://www.geonames.org/datasources/
 
 
 More Information is also available in the geonames faq :
