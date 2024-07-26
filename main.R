@@ -23,6 +23,15 @@ tic("Data Wrangling.")
 source("datawrangling.R")
 toc()
 
+tic("AQI Data")
+source("airquality.R")
+AQILocation
+AQI
+AQIO3Fore
+AQIpm10Fore
+AQIpm25Fore
+toc()
+
 tic("Plotting")
 source("plotting.R")
 HourlyTemp

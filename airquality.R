@@ -1,6 +1,5 @@
 ##Air Quality Script##
 ##Reference: https://aqicn.org/api/"
-
 AQItoken<-"6640265ae7ee49e61eed86a7ce4d2687ed07d3ba"
 
 
@@ -17,3 +16,5 @@ AQIpm10Fore<-content$data$forecast$daily$pm10
 AQIpm10Fore
 AQIpm25Fore<-content$data$forecast$daily$pm25
 AQIpm25Fore
+
+AQILocation<-content$data$city$name
