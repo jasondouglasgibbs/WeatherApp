@@ -8,7 +8,7 @@ BaseURL<-paste0("http://api.waqi.info/feed/geo:", Lat$latitude,";", Long$longitu
 response<-as.character(RETRY("GET", BaseURL, encode="json",time=10))
 content<-jsonlite::fromJSON(response)
 AQI<-content$data$aqi
-AQI
+
 ##Creates dataframes for each pollutant that is forecasted and binds them together##
 AQIO3Fore<-content$data$forecast$daily$o3
 AQIO3Fore$pollutant<-"o3"
@@ -21,7 +21,8 @@ AQIForecast$day<-as.Date(AQIForecast$day)
 
 ##Creates a plot of the AQI data.##
 AQIPlot<-ggplot(data=AQIForecast, aes(x=day, y = max, color=pollutant))+
-  geom_line()+xlab("Date")+ylab("Individual AQI by Pollutant")
+  geom_line()+xlab("Date")+ylab("Individual AQI by Pollutant")+
+  guides(color=guide_legend(title="Pollutant"))
 AQIPlotly<-ggplotly(AQIPlot)
 AQIPlotly
 

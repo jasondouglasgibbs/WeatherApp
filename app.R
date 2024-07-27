@@ -14,19 +14,21 @@ library(stringr)
 library(readr)
 library(lubridate)
 ZipToLatLong<-read_xlsx("ZipToLatLong.xlsx")
+AQItoken<-"6640265ae7ee49e61eed86a7ce4d2687ed07d3ba"
 
 ui <- dashboardPage(
   dashboardHeader(title = "Basic Weather Dashboard"),
   dashboardSidebar(
-    textInput("zip", "ZIP Code (five numbers):",value=21005),
+    textInput("zip", "ZIP Code (five numbers):",value=40121),
     actionButton("go", "Go")
   ),
   dashboardBody(
     # Boxes need to be put in a row (or column)
     fluidRow(
-      textOutput("WeatherStatement"),
+      span(textOutput("WeatherStatement"),style= "font-size:20px"),
       shinydashboard::box(plotlyOutput("HourlyTemp")),
       shinydashboard::box(plotlyOutput("HourlyPrecip")),
+      shinydashboard::box(plotlyOutput("AQIPlotly")),
       shinydashboard::box(plotlyOutput("HourlyRelHumid")),
       shinydashboard::box(plotlyOutput("HourlyDewPoint")),
       shinydashboard::box(width=12,plotlyOutput("WindSpeedDirPlotly", width="100%"))
@@ -52,7 +54,7 @@ server <- function(input, output, session) {
     ##Store state and city information for later use.#
     State<-content$properties$relativeLocation$properties$state
     City<-content$properties$relativeLocation$properties$city
-    output$WeatherStatement<-renderText(paste0("Weather for ", City, ", ", State))
+
     
     ##Hourly Forecast
     ##Retrieve the hourly forecast URL from the overaching API call.##
@@ -198,6 +200,34 @@ server <- function(input, output, session) {
                                     date_breaks = "24 hours")+ylab("Dew Point (Degrees F)")
     HourlyDewPoint<-ggplotly(HourlyDewPoint)
     output$HourlyDewPoint<-renderPlotly(HourlyDewPoint)
+    
+    ##Air Quality Index##
+    ##Builds base URL for AQI information and queries the API.##
+    BaseURL<-paste0("http://api.waqi.info/feed/geo:", Lat$latitude,";", Long$longitude,"/?token=",AQItoken)
+    response<-as.character(RETRY("GET", BaseURL, encode="json",time=10))
+    content<-jsonlite::fromJSON(response)
+    AQI<-content$data$aqi
+
+    
+    ##Creates dataframes for each pollutant that is forecasted and binds them together##
+    AQIO3Fore<-content$data$forecast$daily$o3
+    AQIO3Fore$pollutant<-"o3"
+    AQIpm10Fore<-content$data$forecast$daily$pm10
+    AQIpm10Fore$pollutant<-"pm10"
+    AQIpm25Fore<-content$data$forecast$daily$pm25
+    AQIpm25Fore$pollutant<-"pm2.5"
+    AQIForecast<-bind_rows(AQIO3Fore,AQIpm10Fore,AQIpm25Fore)
+    AQIForecast$day<-as.Date(AQIForecast$day)
+    
+    ##Creates a plot of the AQI data.##
+    AQIPlot<-ggplot(data=AQIForecast, aes(x=day, y = max, color=pollutant))+
+      geom_line()+xlab("Date")+ylab("Individual AQI by Pollutant")+
+      guides(color=guide_legend(title="Pollutant"))
+    AQIPlotly<-ggplotly(AQIPlot)
+    output$AQIPlotly<-renderPlotly(AQIPlotly)
+    output$WeatherStatement<-renderText(paste0("Weather for ", City, ", ", State,
+                                               ". The nearest Air Quality Index is ",
+                                               AQI,"."))
   }
   )
   

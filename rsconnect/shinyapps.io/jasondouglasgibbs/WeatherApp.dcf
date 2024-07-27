@@ -5,7 +5,7 @@ account: jasondouglasgibbs
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 10024470
-bundleId: 8912681
+bundleId: 8914285
 url: https://jasondouglasgibbs.shinyapps.io/WeatherApp/
 version: 1
 asMultiple: FALSE
