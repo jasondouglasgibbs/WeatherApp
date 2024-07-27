@@ -4,7 +4,7 @@
 
 ##Reads in ZIP to TRACT data from the US HUD.##
 ##Data from https://www.huduser.gov/apps/public/uspscrosswalk/home.##
-ZIPtoTRACT<-read_xlsx(file.path(getwd(),"SupportingDocs","ZipToLatLong","ZIP_TRACT_062023.xlsx"))
+ZIPtoTRACT<-read_xlsx(file.path(getwd(),"SupportingDocs","ZipToLatLong","ZIP_TRACT_062024.xlsx"))
 ZIPtoTRACTReduced<-dplyr::select(ZIPtoTRACT,c("ZIP","USPS_ZIP_PREF_CITY","USPS_ZIP_PREF_STATE"))
 ZIPtoTRACTReduced$USPS_ZIP_PREF_CITY<-str_to_title(ZIPtoTRACTReduced$USPS_ZIP_PREF_CITY)
 

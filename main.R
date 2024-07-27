@@ -25,7 +25,6 @@ toc()
 
 tic("AQI Data")
 source("airquality.R")
-AQILocation
 AQI
 AQIO3Fore
 AQIpm10Fore

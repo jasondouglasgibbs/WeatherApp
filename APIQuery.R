@@ -47,3 +47,4 @@ AlertDF<-dplyr::bind_rows(AlertDF)
 
 AlertStatement<-paste0(AlertContent$title,": ", AlertDF$description)
 AlertStatement
+
